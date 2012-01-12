@@ -144,7 +144,7 @@ public class JiraProjectProperty extends JobProperty<AbstractProject<?, ?>> {
 					
 					// call the wsdl uri to check if the jira soap service can be reached
 					try {
-                        if (!findText(open(new URL(url)), "Atlassian JIRA"))
+                        if (!findText(open(new URL(url)), "Atlassian"))
                             return FormValidation.error(Messages
                                     .JiraProjectProperty_NotAJiraUrl());
 
