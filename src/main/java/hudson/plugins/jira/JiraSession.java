@@ -1,12 +1,6 @@
 package hudson.plugins.jira;
 
-import hudson.plugins.jira.soap.JiraSoapService;
-import hudson.plugins.jira.soap.RemoteComment;
-import hudson.plugins.jira.soap.RemoteGroup;
-import hudson.plugins.jira.soap.RemoteIssue;
-import hudson.plugins.jira.soap.RemoteProject;
-import hudson.plugins.jira.soap.RemoteProjectRole;
-import hudson.plugins.jira.soap.RemoteValidationException;
+import hudson.plugins.jira.soap.*;
 
 import java.rmi.RemoteException;
 import java.util.HashSet;
@@ -70,6 +64,23 @@ public class JiraSession {
 		return projectKeys;
 	}
 
+        /**
+        * Resolves an issue. First draft without any parameters or checks
+        *
+        * @param issueId
+        */
+        public void resolveIssue(String issueId) {
+
+            try {
+                RemoteFieldValue[] actionParams = new RemoteFieldValue[]{};
+                service.progressWorkflowAction(token, issueId, "5", actionParams);
+            } catch (RemoteException rex) {
+                LOGGER.throwing(this.getClass().toString(), "resolveIssue", rex);
+            }
+
+        }
+        
+        
 	/**
 	 * Adds a comment to the existing issue. Constrains the visibility of the
 	 * comment the the supplied groupVisibility.
